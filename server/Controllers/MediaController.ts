@@ -15,8 +15,6 @@ import { ensureSuperadmin } from '../Middleware/EnsureSuperadmin';
 import { NotFoundError } from '../Errors/NotFoundError';
 import { AsyncRouter } from '../Utilities/AsyncRouter';
 
-const Chance = chance.Chance();
-
 @injectable()
 export class MediaController implements IController {
   public router = AsyncRouter();

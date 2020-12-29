@@ -11,6 +11,7 @@ export const DependencyType = {
   ResourceAccess: {
     Auth: Symbol('AuthMenager'),
     FileSystem: Symbol('FileSystemResourceAccess'),
+    MediaContent: Symbol('MediaContentResourceAccess'),
     Media: Symbol('MediaResourceAccess'),
     Library: Symbol('LibraryResourceAccess'),
     MediaState: Symbol('MediaStateResourceAccess'),

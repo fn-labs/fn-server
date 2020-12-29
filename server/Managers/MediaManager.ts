@@ -14,6 +14,8 @@ import LibraryRA from '../ResourceAccess/LibraryRA';
 import { NotFoundError } from '../Errors/NotFoundError';
 import { UnauthorizedError } from '../Errors/UnauthorizedError';
 import { TagStatistic } from '../ViewModels/TagStatistic';
+import { IMediaContentRA } from '../ResourceAccess/IMediaContentRA';
+import { Readable } from 'stream';
 
 @injectable()
 export class MediaManager {
@@ -23,7 +25,9 @@ export class MediaManager {
     @inject(DependencyType.Engines.Media)
     private _mediaEngine: MediaEngine,
     @inject(DependencyType.ResourceAccess.Library)
-    private _libraryRA: LibraryRA
+    private _libraryRA: LibraryRA,
+    @inject(DependencyType.ResourceAccess.MediaContent)
+    private _mediaContentRA: IMediaContentRA
   ) {}
 
   async search(term: string, userId: string) {
@@ -116,6 +120,24 @@ export class MediaManager {
 
   getTags(): Promise<Array<TagStatistic>> {
     return this._mediaRA.getTags();
+  }
+
+  async getFile(
+    id: string,
+    userId: string,
+    range?: { start: number; end: number }
+  ) {
+    const media = await this._mediaRA.findById(id, userId);
+    const filestream = this._mediaContentRA.getFile(
+      media.path,
+      media.filename,
+      range
+    );
+    return filestream;
+  }
+
+  saveFile(path: string, stream: Readable, filename: string) {
+    return this._mediaContentRA.saveFile(path, stream, filename);
   }
 
   async requestMeta(id: string, userId: string) {

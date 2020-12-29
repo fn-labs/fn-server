@@ -20,6 +20,7 @@ import { MediaManager } from './Managers/MediaManager';
 import { MediaStateManager } from './Managers/MediaStateManager';
 import { ServerLogManager } from './Managers/ServerLogManager';
 import { UserManager } from './Managers/UserManager';
+import { FileSystemMediaContentRA } from './ResourceAccess/FileSystemMediaContentRA';
 import { FileSystemRA } from './ResourceAccess/FileSystemRA';
 import LibraryRA from './ResourceAccess/LibraryRA';
 import MediaRA from './ResourceAccess/MediaRA';
@@ -38,6 +39,9 @@ async function setupIoc(config: Configuration) {
   container.bind(DependencyType.ResourceAccess.Library).to(LibraryRA);
   container.bind(DependencyType.ResourceAccess.Media).to(MediaRA);
   container.bind(DependencyType.ResourceAccess.FileSystem).to(FileSystemRA);
+  container
+    .bind(DependencyType.ResourceAccess.MediaContent)
+    .to(FileSystemMediaContentRA); // Default implementation
   container.bind(DependencyType.ResourceAccess.MediaState).to(MediaStateRA);
   container.bind(DependencyType.ResourceAccess.ServerLog).to(ServerLogRA);
   container.bind(DependencyType.ResourceAccess.User).to(UserRA);

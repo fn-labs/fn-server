@@ -22,6 +22,7 @@ import AuthenticationStrategy from './Middleware/AuthenticationStrategy';
 import mongoSession from 'connect-mongodb-session';
 import Logger from './Middleware/Logger';
 import { HttpError } from './Errors/HttpError';
+import compression from 'compression';
 
 export class Merriman {
   private _app = express();
@@ -43,6 +44,7 @@ export class Merriman {
     this._app.use(express.json({ limit: '5mb' }));
     this._app.use(morgan(logFormat));
     this._app.use(cors());
+    this._app.use(compression());
     this._app.use(busboy());
     this._app.use(
       (err: Error, req: Request, res: Response, next: NextFunction) => {

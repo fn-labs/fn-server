@@ -7,7 +7,8 @@ import uuid from 'uuid/v4';
 import { program } from 'commander';
 import { Merriman } from '../app';
 import { Configuration } from '../Utilities/ConfigUtil';
-program.name('merriman');
+const pkg = require('../../package.json');
+program.name('merriman').version(pkg.version);
 
 program
   .command('run <config>')
